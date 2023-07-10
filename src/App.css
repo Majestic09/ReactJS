@@ -1,8 +1,25 @@
 /* body {
   background: linear-gradient(to right, rgb(0, 201, 255), rgb(146, 254, 157));
 } */
-
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 7.25rem;
+}
 .box {
   display: grid;
   justify-content: center;
+}
+.board-row {
+
+  display: flex;
+  justify-content: center;
+}
+.square {
+  width: 6.25rem;
+  height: 6.25rem;
+  background-color: grey;
+  font-size: 3.5rem;
+  
 }

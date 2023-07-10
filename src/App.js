@@ -1,58 +1,56 @@
+import { useState } from "react";
+import "./App.css";
 
-
-import { useState } from 'react';
-import './App.css';
-
-// function App() {
-//   return (
-//     <div className='container'> 
-//       <h1>Learning Reactjs From react.dev</h1>
-//     </div>
-//   );
-// }
-
-// const products = [
-//   { title: 'Cabbage', isFruit: false, id: 1 },
-//   { title: 'Garlic', isFruit: false, id: 2 },
-//   { title: 'Apple', isFruit: true, id: 3 },
-// ];
-
-
-// // export { App };
-// export default function ShoppingList() {
-//   const listItems = products.map(ele =>
-//     <li
-//       key={ele.id}
-//       style={{
-//         color: ele.isFruit ? 'magenta' : 'darkgreen'
-//       }}
-//     >
-//       {ele.title}
-//     </li>
-//   );
-
-//   return (
-//     <ul>{listItems}</ul>
-//   );
-// }
-export default function Myapp() {
-  const [count, setCount] = useState(0)
-  
-  const handleClick = () => {
-    setCount(count+1);
-  };
-  return(
-  <div>
-    <h1>Counters that update</h1>
-      <Mybutton count={count} onClick={handleClick} />
-      <Mybutton count={count} onClick={handleClick} />
-
-    </div>
-  )
-}
-
-function Mybutton({count,onClick}) {
+const Square = ({ value, onSquareClick }) => {
   return (
-    <button onClick={onClick}>Clicked { count} times</button>
-  )
-}
+    <button className="square" onClick={onSquareClick}>
+      {value}
+    </button>
+  );
+};
+
+const Board = () => {
+  const [isNext, setIsnext] = useState(true);
+  const [squares, setSquares] = useState(Array(9).fill(null));
+
+  const handleClick = (i) => {
+    const nextSquare = squares.slice();
+    // nextSquare[i] = "X";
+    isNext?nextSquare[i]="X":nextSquare[i]=("O")
+    setSquares(nextSquare);
+   
+    setIsnext(!isNext)
+  };
+
+  return (
+    <>
+      <div className="board-row">
+        <Square value={squares[0]} onSquareClick={()=>handleClick(0)} />
+        <Square value={squares[1]} onSquareClick={()=>handleClick(1)} />
+        <Square value={squares[2]} onSquareClick={()=>handleClick(2)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[3]} onSquareClick={()=>handleClick(3)} />
+        <Square value={squares[4]} onSquareClick={()=>handleClick(4)} />
+        <Square value={squares[5]} onSquareClick={()=>handleClick(5)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[6]} onSquareClick={()=>handleClick(6)} />
+        <Square value={squares[7]} onSquareClick={()=>handleClick(7)} />
+        <Square value={squares[8]} onSquareClick={()=>handleClick(8)}/>
+      </div>
+    </>
+  );
+};
+
+// const Square = ({ value }) => {
+//   const handleClick = () => {
+//     console.log(`clicked! ${value}`)
+//   }
+//   return <button className="square" onClick={handleClick}>{value}</button>;
+// };
+// above square function is example of how to use props
+
+
+
+export default Board;
