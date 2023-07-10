@@ -1,34 +1,58 @@
 
 
+import { useState } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className='container'> 
-      <h1>Learning Reactjs From react.dev</h1>
-    </div>
-  );
-}
+// function App() {
+//   return (
+//     <div className='container'> 
+//       <h1>Learning Reactjs From react.dev</h1>
+//     </div>
+//   );
+// }
 
-const user = {
-  name: "Dino Moria",
-  imageUrl : "https://m.media-amazon.com/images/I/31mnNQ-grFL.jpg",
-  imageSize : 90
-}
-function Mybutton() {
-  return (
-    <button >I'm a button</button>
+// const products = [
+//   { title: 'Cabbage', isFruit: false, id: 1 },
+//   { title: 'Garlic', isFruit: false, id: 2 },
+//   { title: 'Apple', isFruit: true, id: 3 },
+// ];
+
+
+// // export { App };
+// export default function ShoppingList() {
+//   const listItems = products.map(ele =>
+//     <li
+//       key={ele.id}
+//       style={{
+//         color: ele.isFruit ? 'magenta' : 'darkgreen'
+//       }}
+//     >
+//       {ele.title}
+//     </li>
+//   );
+
+//   return (
+//     <ul>{listItems}</ul>
+//   );
+// }
+export default function Myapp() {
+  const [count, setCount] = useState(0)
+  
+  const handleClick = () => {
+    setCount(count+1);
+  };
+  return(
+  <div>
+    <h1>Counters that update</h1>
+      <Mybutton count={count} onClick={handleClick} />
+      <Mybutton count={count} onClick={handleClick} />
+
+    </div>
   )
 }
 
-
-export { App };
-export default function Myapp() {
-  
-  return <div className='box'>
-    <App/>
-    <h1>{user.name}</h1>
-    <img src={ user.imageUrl} alt={"Image of Harry" + user.name} style={{width:user.imageSize,height:user.imageSize}} />
-    <Mybutton />
-  </div>
+function Mybutton({count,onClick}) {
+  return (
+    <button onClick={onClick}>Clicked { count} times</button>
+  )
 }
