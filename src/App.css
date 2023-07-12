@@ -14,12 +14,18 @@ body {
 .board-row {
 
   display: flex;
+  gap: 1rem;
   justify-content: center;
 }
 .square {
   width: 6.25rem;
   height: 6.25rem;
-  background-color: grey;
+  background-color: 	#f8ccf9;
   font-size: 3.5rem;
-  
+  color:white;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.status{
+  color:aqua
 }
