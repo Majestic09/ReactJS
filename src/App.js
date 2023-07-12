@@ -9,9 +9,9 @@ const Square = ({ value, onSquareClick }) => {
   );
 };
 
-const Board = () => {
-  const [isNext, setIsnext] = useState(true);
-  const [squares, setSquares] = useState(Array(9).fill(null));
+const Board = ({ isNext, squares, onPlay }) => {
+  // const [isNext, setIsnext] = useState(true);
+  // const [squares, setSquares] = useState(Array(9).fill(null));
 
   const handleClick = (i) => {
     if (squares[i] || calculateWinner(squares)) {
@@ -20,24 +20,26 @@ const Board = () => {
     const nextSquare = squares.slice();
     // nextSquare[i] = "X";
     isNext ? (nextSquare[i] = "X") : (nextSquare[i] = "O");
-    setSquares(nextSquare);
-    setIsnext(!isNext);
+
+    onPlay(nextSquare);
   };
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
-    status = `Winner : ${winner}`
+    status = `Winner : ${winner}`;
   }
   // else if (isBoardFull) {
   //   status = "Draw !"
   // }
   else {
-    status = `Next Player : ` + (isNext?"X":"O")
+    status = `Next Player : ` + (isNext ? "X" : "O");
   }
 
   return (
     <>
-      <div className="status"><h2>{status}</h2></div>
+      <div className="status">
+        <h2>{status}</h2>
+      </div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -70,7 +72,6 @@ const calculateWinner = (squares) => {
   ];
   for (let i = 0; i < line.length; i++) {
     const [a, b, c] = line[i];
-    console.log(a, b, c);
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }
@@ -78,14 +79,14 @@ const calculateWinner = (squares) => {
   return null;
 };
 
-const isBoardFull = (squares) => {
-  for (let i = 0; i < squares.length; i++) {
-    if (squares[i] === null) {
-      return false; // If any square is null, the board is not full
-    }
-  }
-  return true; // If all squares are filled, the board is full
-};
+// const isBoardFull = (squares) => {
+//   for (let i = 0; i < squares.length; i++) {
+//     if (squares[i] === null) {
+//       return false; // If any square is null, the board is not full
+//     }
+//   }
+//   return true; // If all squares are filled, the board is full
+// };
 
 // const Square = ({ value }) => {
 //   const handleClick = () => {
@@ -94,5 +95,45 @@ const isBoardFull = (squares) => {
 //   return <button className="square" onClick={handleClick}>{value}</button>;
 // };
 // above square function is example of how to use props
+// export default function Game() {
+//   return(
 
-export default Board;
+//   )
+// }
+
+export default function Game() {
+  const [isNext, setIsNext] = useState(true);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const currentSquares = history[history.length - 1];
+  const handlePlay = (nextSquares) => {
+    setHistory([...history, nextSquares]);
+    setIsNext(!isNext);
+  };
+  const jumpTo = (nextMove) => {
+    
+  }
+
+  const moves = history.map((squares, move) =>{
+    let description;
+    if (move > 0) {
+      description = "Go to move #" + move;
+    } else {
+      description = "Go to game start"
+    }
+    return (
+      <li>
+        <button onClick={() => jumpTo(move)}>{description}</button>
+      </li>
+    )
+  })
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board isNext={isNext} squares={currentSquares} onPlay={handlePlay} />
+      </div>
+      <div className="game-info">
+        <ol>{moves}</ol>
+      </div>
+    </div>
+  );
+}
